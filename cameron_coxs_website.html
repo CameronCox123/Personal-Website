@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cameron Cox's Website</title>
+  <style>
+    :root{
+      --bg: #0f2f23;
+      --panel: #123f30;
+      --muted: #e9f2ec;
+      --gold: #c9a34a;
+      --accent: #2b6b54;
+      --glass: rgba(255,255,255,0.04);
+      --radius: 14px;
+      --max-width: 1100px;
+      --transition: 350ms cubic-bezier(.2,.9,.2,1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:var(--muted);background:linear-gradient(180deg,var(--bg),#09231a);}
+    header{position:sticky;top:12px;z-index:80;display:flex;align-items:center;justify-content:space-between;max-width:var(--max-width);margin:12px auto;padding:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);backdrop-filter: blur(6px);border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--panel));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    nav{display:flex;gap:12px}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;transition:var(--transition);font-size:14px}
+    nav a.active{background:linear-gradient(90deg, rgba(201,163,74,0.12), rgba(201,163,74,0.06));box-shadow:0 6px 16px rgba(18,63,48,0.12);color:var(--gold);}
+    .container{max-width:var(--max-width);margin:28px auto;padding:20px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
+    .hero h1{margin:0 0 8px 0;font-size:34px;color:var(--muted)}
+    .hero p{margin:0;color:rgba(233,242,236,0.85)}
+    .cta{margin-top:12px;display:flex;gap:10px}
+    .btn{background:var(--gold);color:#062012;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:10px}
+    .projects{margin-top:26px;display:flex;flex-direction:column;gap:18px}
+    section.project{display:grid;grid-template-columns:3fr 1.2fr;gap:18px;padding:18px;border-radius:12px;background:var(--panel);border:1px solid rgba(255,255,255,0.02);align-items:center;transform:translateY(18px);opacity:0;transition:var(--transition)}
+    section.project.visible{transform:none;opacity:1}
+    .project-main{min-height:160px}
+    .project-title{display:flex;align-items:center;gap:12px}
+    .project-title h3{margin:0}
+    .project-desc{margin-top:10px;color:rgba(233,242,236,0.85)}
+    .project-side{display:flex;flex-direction:column;gap:10px}
+    .preview{background:var(--glass);border-radius:10px;padding:10px;min-height:120px;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(255,255,255,0.03)}
+    .preview img, .preview video{max-width:100%;max-height:160px;border-radius:8px}
+    .uploader{display:flex;gap:8px;flex-wrap:wrap}
+    .uploader input[type=file]{display:none}
+    .upload-btn{padding:8px 10px;background:transparent;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer}
+    .resume-panel{margin-top:22px;padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)}
+    .iframe-wrap{width:100%;height:620px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+    iframe{width:100%;height:100%;border:0;background:white}
+    @media (max-width:980px){.hero{grid-template-columns:1fr;} section.project{grid-template-columns:1fr} .iframe-wrap{height:420px}}
+    footer{max-width:var(--max-width);margin:26px auto;padding:18px;border-radius:12px;background:transparent;text-align:center;color:rgba(233,242,236,0.7)}
+    .muted{color:rgba(233,242,236,0.72);font-size:13px}
+    .link{color:var(--gold);text-decoration:underline;cursor:pointer}
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">CC</div>
+    <div>
+      <div style="font-weight:700">Cameron Cox</div>
+      <div class="muted" style="font-size:12px">Embedded projects • interactive resume • media previews</div>
+    </div>
+  </div>
+  <nav id="topnav">
+    <a href="#projects" class="navlink active">Projects</a>
+    <a href="#resume" class="navlink">Resume</a>
+    <a href="#about" class="navlink">About</a>
+  </nav>
+</header>
+<main class="container">
+  <div class="hero">
+    <div>
+      <h1>Hi — I'm Cameron</h1>
+      <p>Software engineer & mechatronics tinkerer. This page dynamically presents technical projects as you scroll. Upload images and videos locally to preview them in project cards. Link your live Google Doc resume so it always shows the most recent version.</p>
+      <div class="cta">
+        <button class="btn" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">View projects</button>
+        <button class="ghost" onclick="document.querySelector('#resume').scrollIntoView({behavior:'smooth'})">See resume</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
+        <div style="font-size:13px;color:var(--muted)">Contact</div>
+        <div style="margin-top:8px;font-weight:600">cameron@example.com</div>
+        <div class="muted" style="margin-top:6px">LinkedIn • GitHub • Personal repo links below</div>
+      </div>
+      <div style="padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.03)">
+        <div style="font-size:13px;color:var(--muted)">Quick links</div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <a class="link" href="#projects">Projects</a>
+          <a class="link" href="#resume">Resume</a>
+          <a class="link" href="https://github.com/" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section id="projects" style="margin-top:20px">
+    <h2 style="margin:6px 0 12px 0">Technical Projects</h2>
+    <div class="projects" id="projects-list">
+      <!-- Default sample projects (these will be replaced by saved projects if you previously used Add project) -->
+      <section class="project" data-project-id="1">
+        <div class="project-main">
+          <div class="project-title"><div style="width:10px;height:10px;background:var(--gold);border-radius:3px"></div><h3>Autonomous Rover — Obstacle Avoidance Sweep</h3></div>
+          <div class="project-desc">ESP32-controlled rover that performs a full ultrasonic sweep when an obstacle is detected. Uses servo for scanning and motors for navigation. Upload images or demo videos to preview here.</div>
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center"><a class="link" href="#" onclick="openProjectLink('https://github.com/')">Source</a><a class="link" href="#" onclick="openProjectLink('https://example.com')">Writeup</a></div>
+        </div>
+        <aside class="project-side">
+          <div class="preview" id="preview-1">No media yet</div>
+          <div class="uploader">
+            <label class="upload-btn"><input type="file" accept="image/*,video/*" data-target="1">Upload image/video</label>
+            <button class="upload-btn" onclick="clearPreview(1)">Clear</button>
+          </div>
+        </aside>
+      </section>
+      <section class="project" data-project-id="2">
+        <div class="project-main">
+          <div class="project-title"><div style="width:10px;height:10px;background:var(--gold);border-radius:3px"></div><h3>Battle-bot Flipper Mechanism</h3></div>
+          <div class="project-desc">Design and construction of a spring-assisted flipper using a high-torque slow-RPM motor. Focus on torque calculations and mechanical advantage. Upload CAD screenshots or demo clips.</div>
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center"><a class="link" href="#">CAD files</a><a class="link" href="#">Competition footage</a></div>
+        </div>
+        <aside class="project-side">
+          <div class="preview" id="preview-2">No media yet</div>
+          <div class="uploader">
+            <label class="upload-btn"><input type="file" accept="image/*,video/*" data-target="2">Upload image/video</label>
+            <button class="upload-btn" onclick="clearPreview(2)">Clear</button>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </section>
+  <section id="resume" class="resume-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:0">Resume (live)</h2>
+        <div class="muted" style="margin-top:4px">Display a live Google Doc. Make sure the doc is shared: <strong>Anyone with the link can view</strong>.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input id="docIdInput" placeholder="Paste Google Doc URL or ID" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted)" />
+        <button class="upload-btn" id="loadDocBtn">Load</button>
+        <button class="upload-btn" id="testPreviewBtn">Test preview</button>
+        <button class="upload-btn" id="openDocBtn">Open in Google Docs</button>
+      </div>
+    </div>
+    <div style="margin-top:12px" class="iframe-wrap">
+      <iframe id="resumeFrame" src="about:blank" title="Resume preview (Google Doc)"></iframe>
+    </div>
+  </section>
+  <section id="about" style="margin-top:22px;padding:18px;border-radius:12px;background:var(--panel);border:1px solid rgba(255,255,255,0.03)">
+    <h3 style="margin:0 0 8px 0">About</h3>
+    <p class="muted">Short bio — put academic background, interests, and a few bullet points about what you build. This is a great place to link to publications, GitHub repos, and personal email.</p>
+  </section>
+</main>
+<footer>
+  <div>Made with ❤️ • Palette: darker greens, whites, golds</div>
+</footer>
+<script>
+  // ---------- Utilities ----------
+  function openProjectLink(url){ if(!url || url === '#') return; window.open(url, '_blank'); }
+  function escapeHtml(unsafe) { if(!unsafe) return ''; return unsafe.replace(/[&<>,\"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;', '"':'&quot;',"'":"&#039;"}[m]; }); }
+
+  // ---------- File preview (browser-only) ----------
+  function handleFileUploadEvent(e){
+    const input = e.target;
+    const file = input.files && input.files[0];
+    const target = input.dataset.target;
+    const preview = document.getElementById('preview-' + target);
+    if(!file || !preview) return;
+    const type = file.type || '';
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const url = ev.target.result;
+      preview.innerHTML = '';
+      if(type.startsWith('image/')){
+        const img = document.createElement('img'); img.src = url; img.alt = file.name; preview.appendChild(img);
+      } else if(type.startsWith('video/')){
+        const vid = document.createElement('video'); vid.src = url; vid.controls = true; vid.playsInline = true; preview.appendChild(vid);
+      } else {
+        preview.textContent = file.name + ' (preview not available)';
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+  function clearPreview(id){ const prev = document.getElementById('preview-' + id); if(prev) prev.innerHTML = 'No media yet'; const input = document.querySelector('input[data-target="' + id + '"]'); if(input) input.value = ''; }
+
+  // ---------- Projects persistence & UI ----------
+  const PROJECTS_KEY = 'personalSiteProjects_v1';
+  function makeProjectElement(p){
+    const id = String(p.id || ('p' + Date.now()));
+    const sec = document.createElement('section');
+    sec.className = 'project visible';
+    sec.setAttribute('data-project-id', id);
+    sec.innerHTML = `
+      <div class="project-main">
+        <div class="project-title"><div style="width:10px;height:10px;background:var(--gold);border-radius:3px"></div><h3>${escapeHtml(p.title)}</h3></div>
+        <div class="project-desc">${escapeHtml(p.description)}</div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center"><a class="link" href="#" data-src>Source</a><a class="link" href="#" data-writeup>Writeup</a></div>
+      </div>
+      <aside class="project-side">
+        <div class="preview" id="preview-${id}">${p.previewHtml || 'No media yet'}</div>
+        <div class="uploader">
+          <label class="upload-btn"><input type="file" accept="image/*,video/*" data-target="${id}">Upload image/video</label>
+          <button class="upload-btn" data-clear>Clear</button>
+        </div>
+      </aside>
+    `;
+    // wire up newly created elements
+    const fileInput = sec.querySelector('input[type=file]'); if(fileInput) fileInput.addEventListener('change', handleFileUploadEvent);
+    const clearBtn = sec.querySelector('[data-clear]'); if(clearBtn) clearBtn.addEventListener('click', ()=>clearPreview(id));
+    const srcLink = sec.querySelector('[data-src]'); if(srcLink) srcLink.addEventListener('click', (ev)=>{ ev.preventDefault(); if(p.source) openProjectLink(p.source); });
+    const writeupLink = sec.querySelector('[data-writeup]'); if(writeupLink) writeupLink.addEventListener('click', (ev)=>{ ev.preventDefault(); if(p.writeup) openProjectLink(p.writeup); });
+    observeProjectSection(sec);
+    return sec;
+  }
+  function loadProjectsFromStorage(){
+    const raw = localStorage.getItem(PROJECTS_KEY);
+    if(!raw) return;
+    try{
+      const arr = JSON.parse(raw);
+      if(!Array.isArray(arr) || arr.length === 0) return;
+      const container = document.getElementById('projects-list');
+      container.querySelectorAll('.project').forEach(n=>n.remove());
+      arr.forEach(p=>{ container.appendChild(makeProjectElement(p)); });
+    }catch(e){ console.warn('Failed to parse saved projects', e); }
+  }
+  function saveProjectMetadata(p){
+    const raw = localStorage.getItem(PROJECTS_KEY);
+    let arr = raw ? JSON.parse(raw) : [];
+    arr.push(p);
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(arr));
+  }
+  function addProject(){
+    const title = prompt('Project title (short):'); if(!title) return;
+    const description = prompt('Short description:') || '';
+    const source = prompt('Source link (GitHub, etc) — optional:') || '';
+    const writeup = prompt('Writeup link — optional:') || '';
+    const id = 'p' + Date.now();
+    const proj = { id, title, description, source, writeup };
+    const container = document.getElementById('projects-list');
+    container.appendChild(makeProjectElement(proj));
+    saveProjectMetadata(proj);
+    setTimeout(()=>{ const el = document.querySelector('[data-project-id="'+id+'"]'); if(el) el.scrollIntoView({behavior:'smooth'}); }, 80);
+  }
+
+  // ---------- Scroll reveal & nav highlighting ----------
+  const projectObserver = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('visible'); }); },{threshold:0.12});
+  function observeProjectSection(node){ if(node) projectObserver.observe(node); }
+  document.querySelectorAll('section.project').forEach(p=>{ observeProjectSection(p); // wire built-in file inputs for samples
+    const input = p.querySelector('input[type=file]'); if(input) input.addEventListener('change', handleFileUploadEvent);
+    const clearBtn = p.querySelector('.uploader button'); if(clearBtn) clearBtn.addEventListener('click', ()=>{ const id = p.getAttribute('data-project-id'); clearPreview(id); });
+  });
+
+  const navLinks = document.querySelectorAll('.navlink');
+  const sectionObserver = new IntersectionObserver((entries)=>{ entries.forEach(ent=>{ if(ent.isIntersecting){ navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === '#'+ent.target.id)); } }); },{threshold:0.4});
+  ['projects','resume','about'].forEach(id=>{ const el = document.getElementById(id); if(el) sectionObserver.observe(el); });
+
+  // ---------- Google Doc resume preview helpers (no auto-load) ----------
+  const frame = document.getElementById('resumeFrame');
+  const input = document.getElementById('docIdInput');
+  const loadBtn = document.getElementById('loadDocBtn');
+  const testBtn = document.getElementById('testPreviewBtn');
+  const openBtn = document.getElementById('openDocBtn');
+  const STORAGE_KEY = 'liveResumeDocId_v1';
+
+  function parseDocIdFromUrl(s){ if(!s) return ''; s = s.trim(); const m = s.match(/\/document\/d\/([a-zA-Z0-9_-]{10,})/); if(m) return m[1]; const m2 = s.match(/[?&]id=([a-zA-Z0-9_-]{10,})/); if(m2) return m2[1]; if(/^[a-zA-Z0-9_-]{10,}$/.test(s)) return s; return ''; }
+  function loadDoc(id){ if(!id) return; frame.src = 'https://docs.google.com/document/d/' + encodeURIComponent(id) + '/preview'; }
+  function setDoc(){ const raw = (input.value || '').trim(); const id = parseDocIdFromUrl(raw); if(!id){ alert('Could not detect a Google Doc ID. Paste the full document URL or the ID (the long string).'); return; } localStorage.setItem(STORAGE_KEY,id); loadDoc(id); }
+  function openDocInNewTab(){ const id = localStorage.getItem(STORAGE_KEY) || parseDocIdFromUrl((input.value||'').trim()); if(!id){ alert('No doc ID set. Paste your Google Doc URL/ID in the field and click Load.'); return; } window.open('https://docs.google.com/document/d/' + encodeURIComponent(id) + '/edit', '_blank'); }
+  function openPreviewInNewTab(){ const id = localStorage.getItem(STORAGE_KEY) || parseDocIdFromUrl((input.value||'').trim()); if(!id){ alert('No doc ID set. Paste your Google Doc URL/ID in the field and click Load.'); return; } window.open('https://docs.google.com/document/d/' + encodeURIComponent(id) + '/preview', '_blank'); }
+
+  // Add a small inline tip (don't auto-load the iframe to avoid repeated Google auth popups)
+  (function init(){
+    try{
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if(saved) input.value = saved; // do not auto-call loadDoc(saved)
+      const info = document.createElement('div'); info.style.cssText = 'color:rgba(233,242,236,0.85);font-size:13px;margin-top:8px;max-width:520px';
+      info.innerHTML = '<strong>Tip:</strong> click <em>Load</em> to preview the resume. If Google repeatedly prompts you to sign in, set the document to <em>Anyone with the link → Viewer</em> or click <em>Test preview</em> to open the preview in a new tab and sign in there once.';
+      input.parentNode.appendChild(info);
+      // wire up buttons
+      loadBtn.addEventListener('click', setDoc);
+      testBtn.addEventListener('click', openPreviewInNewTab);
+      openBtn.addEventListener('click', openDocInNewTab);
+
+      // add 'Add project' button to header
+      const projectsHeader = document.querySelector('#projects h2');
+      if(projectsHeader){ const btn = document.createElement('button'); btn.className = 'btn'; btn.style.marginLeft = '12px'; btn.textContent = 'Add project'; btn.onclick = addProject; projectsHeader.appendChild(btn); }
+
+      // load saved projects (if any)
+      loadProjectsFromStorage();
+    }catch(e){ console.warn('init failed', e); }
+  })();
+
+  // Smooth scrolling for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click', (ev)=>{ ev.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
+</script>
+</body>
+</html>
